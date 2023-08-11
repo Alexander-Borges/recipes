@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'style.css')}}">
+</head>
+<body>
+    <div class="container">
+        <!-- Don't forget to fix this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+        {{recipe}}
+        {{recipe.user.first_name}}
+        <div class="flex-container">
+            <h1>Welcome Alexander</h1>
+            <div>
+                <a href="/recipes/dashboard">Dashboard</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </div>
+
+        <h2>{{recipe.name}}</h2>
+        <div  class="detail-container">
+            <div class="flex-container">
+                <p>Description:</p>
+                <p>{{recipe.description}}</p>
+            </div>
+            <div class="flex-container">
+                <p>under 30 minutes:</p>
+                <p>
+                    {% if recipe.under_30: %}
+                        Yes
+                    {% else %}
+                        No 
+                    {% endif %}
+                </p>
+
+                
+            </div>
+            <div class="flex-container">
+                <p>Instructions:</p>
+                <p>{{recipe.instructions}}</p>
+            </div>
+            <div class="flex-container">
+                <p>Post Made:</p>
+                <p>{{recipe.date_made}}</p>
+            </div>
+            <div class="flex-container">
+                <p>Posted By:</p>
+                <p>{{recipe.user.first_name}}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

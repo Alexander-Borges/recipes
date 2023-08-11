@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Recipe</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'style.css')}}">
+</head>
+<body>
+    <div class="container">
+        < class="flex-container">
+            <h1>Edit Your Recipe</h1>
+            <div>
+                <a href="/recipes/dashboard">Back to Recipes</a>
+                <a href="/logout">Logout</a>
+
+            </div>
+        
+        
+            <!--Validation Messages Here-->
+        
+        <form action="/recipes/update" method="post">
+            <input type="hidden" name="id" value="{{recipe.id}}">
+            <div class="form-group">
+                <label for="name" class="form-label">Name:</label>
+                <input type="text" name="name" class="form-control" value="{{recipe.name}}">
+            </div>
+            <div class="form-group">
+                <label for="description" class="form-label">Recipe Description</label>
+                <textarea type="text" name="description" value="{{recipe.description}}"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="instructions" class="form-label">Recipe Instructions</label>
+                <textarea type="text" name="Instructions" class="form-control" value="{{recipe.instructions}}"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="date_made" >Date Cooked/Made:</label>
+                <input type="date" name="date_made"  value="{{recipe.date_made.strftime('%Y-%m-%d')}}">
+            </div>
+            <div class="form-group">
+                <p>Under 30 minutes?</p>
+                <label for="yes" class="form-label">Yes</label>
+                <input type="radio" name="under_30" value="1" id="yes">
+                <label for="no" class="form-label">No</label>
+                <input type="radio" name="under_30" value="0" id="no">
+            </div>
+            <input type="hidden" name="user_id" value="{{session.user_id}}">
+            <div class="form-group">
+                <input type="submit" class="btn" value="Submit" value="update_recipe">
+            </div>
+
+        </form>
+    </div>
+</body>
+</html>
