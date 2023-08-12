@@ -8,9 +8,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- Don't forget to fix this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-        {{recipe}}
-        {{recipe.user.first_name}}
         <div class="flex-container">
             <h1>Welcome Alexander</h1>
             <div>
@@ -28,7 +25,7 @@
             <div class="flex-container">
                 <p>under 30 minutes:</p>
                 <p>
-                    {% if recipe.under_30: %}
+                    {% if recipe.under_30 %}
                         Yes
                     {% else %}
                         No 

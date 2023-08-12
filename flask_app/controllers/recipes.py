@@ -19,7 +19,7 @@ def recipes_dashboard():
     # TO DO:
     # Get all the recipes and send to the template
     #user = User.get_by_id(session["user_id"])
-    user = User.get_by_id(session["user_id"])  # Retrieve the user object
+    user = User.get_by_id({"id": session["user_id"]})  # Retrieve the user object
     recipes = Recipe.get_all()  # Make sure you have a get_all() method in your Recipe model
     return render_template("dashboard.html", user=user, recipes=recipes)
 
@@ -30,7 +30,7 @@ def recipe_detail(recipe_id):
     # Need to get that recipe from the database
     recipe = Recipe.get_by_id(recipe_id)
     # Pass the recipe into the template
-    return render_template("recipe_detail.html")
+    return render_template("recipe_detail.html", recipe=recipe)
 
 # Render Page with Create Form
 @app.route("/recipes/new")
@@ -54,6 +54,7 @@ def edit_page(recipe_id):
 def delete_recipe(recipe_id):
     print("In delete page: ", recipe_id)
     # Call delete method
+    Recipe.delete_by_id(recipe_id)
     return redirect("/recipes/dashboard")
 
 ######## POST Routes ########
@@ -63,29 +64,43 @@ def delete_recipe(recipe_id):
 @app.route("/recipes", methods=["POST"])
 def create_recipe():
     print("In the create process POST route: ", request.form)
+    # Before we save
+    # If the form data is good THEN save and go to the dashboard
+    is_valid = Recipe.is_valid(request.form)
+    
+    print(is_valid)
     recipe_data = {
         "name": request.form["name"],
         "description": request.form["description"],
         "instructions": request.form["instructions"],
         "date_made": request.form["date_made"],
-        "under_30": request.form["under_30"],
+        #"under_30" : request.form["under_30"],
+        "under_30": request.form.get("under_30"),
         "user_id": request.form["user_id"]
     }
 
     print("Recipe Data:", recipe_data)
 
     try:
-        Recipe.save(recipe_data)
+        #Recipe.save(recipe_data)
         flash("Recipe created successfully!", "success")
     except Exception as e:
         flash("Error creating recipe: " + str(e), "danger")
-
-    return redirect("/recipes/dashboard")
+    if is_valid:
+        Recipe.save(request.form)
+        return redirect("/recipes/dashboard")
+    #else: -- redirect to the new page to show errors to the user
+    return redirect("recipes/new")
 
 # Update (Process Form)
 @app.route("/recipes/update", methods=["POST"])
 def update_recipe():
     print("In update POST route: ", request.form)
-    return redirect("/recipes")
+    is_valid = Recipe.is_valid(request.form)
+    #return redirect("/recipes")
 
-
+    #if the form data is good THEN save and go to the dashboard
+    if is_valid:
+        Recipe.update(request.form)
+        return redirect("/recipes/dashboard")
+    return redirect(f"recipes/edit/{request.form['id']}")

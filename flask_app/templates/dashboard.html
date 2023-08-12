@@ -26,27 +26,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for recipe in recipes: %}
+                        {% for recipe in recipes %}
                         <tr>
                             <td>{{recipe.name}}</td>
                             <td>
                                 {% if recipe.under_30 %}
-                                Yes  
+                                    Yes  
                                 {% else: %}
-                                No 
+                                    No 
                                 {% endif %}
                             </td>
                             <td>
                                 <a href="/recipes/{{recipe.id}}">View instructions</a>
                                 <!--Edit and Delete Conditional-->
-                                <!-- if logged in user id is the same as recipe's owner-->
-                                    {% if user.id == recipe.user.id %}
+                                <!-- if logged in user id is the same as recipe's owner's id-->
+                                {% if user.id == recipe.user.id %}
                                 <a href="/recipes/edit/{{recipe.id}}">Edit</a>
                                 <a href="/recipes/delete/{{recipe.id}}">Delete</a>
-                                    {% endif %}
+                                {% endif %}
                             </td>
                         </tr>
-                                    {% endfor %} 
+                        {% endfor %} 
                     </tbody>
                 </table>
             </div>

@@ -8,6 +8,12 @@
 </head>
 <body>
     <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% for message in messages: %}
+        <p class="error">{{message}}</p>
+        {% endfor %}
+        {% endwith %}
+        
         <div class="flex-container">
             <h1>Add a New Recipe</h1>
             <div>
@@ -27,7 +33,7 @@
             </div>
             <div class="form-group">
                 <label for="instructions" class="form-label">Recipe Instructions</label>
-                <textarea name="instructions" class="form-control"></textarea> <!-- Corrected the name attribute and added class attribute -->
+                <textarea name="instructions" class="form-control">{{request.form.get("instructions", "") }}</textarea> <!-- Corrected the name attribute and added class attribute -->
             </div>
             <div class="form-group">
                 <label for="date_made" >Date Made:</label>
@@ -35,10 +41,10 @@
             </div>
             <div class="form-group"> <!-- Moved the div class inside the container div -->
                 <p>Under 30 minutes?</p>
-                <label for="yes" class="form-label">Yes</label>
-                <input type="radio" name="under_30" value="1">
-                <label for="no" class="form-label">No</label>
-                <input type="radio" name="under_30" value="0">
+                <label for="under_30" class="form-label">Yes</label>
+                <input type="radio" id="yes" name="under_30" value="1">
+                <label for="under_30" class="form-label">No</label>
+                <input type="radio" id="no" name="under_30" value="0">
             </div>
             <input type="hidden" name="user_id" value="{{ session.user_id }}">
             <div class="form-group"> <!-- Moved the div class inside the container div -->

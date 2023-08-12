@@ -8,6 +8,11 @@
 </head>
 <body>
     <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% for message in messages: %}
+        <p class="error">{{message}}</p>
+        {% endfor %}
+        {% endwith %}
         < class="flex-container">
             <h1>Edit Your Recipe</h1>
             <div>
