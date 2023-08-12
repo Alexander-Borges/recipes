@@ -33,13 +33,13 @@ class Recipe:
         data = {
             "id": recipe_id
         }
-        recipe_dict = connectToMySQL(cls.db).query_db(query, data)
+        recipe_dict = connectToMySQL(cls.db).query_db(query, data)[0]
         #recipe_dict = connectToMySQL(cls.db).query_db(query, data)[0]
         #print(recipe_dict)
         if not recipe_dict:
             return None  # Recipe not found
         
-        recipe_dict = recipe_dict[0]  # Get the first result
+        recipe_dict = recipe_dict  # Get the first result
         recipe_object = Recipe(recipe_dict)
         
         # Make a recipe object from data
